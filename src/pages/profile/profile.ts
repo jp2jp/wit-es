@@ -3,23 +3,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-tabs',
-  templateUrl: 'tabs.html',
+  selector: 'page-profile',
+  templateUrl: 'profile.html',
 })
-export class TabsPage {
-
-  tab1: any;
-  tab2: any;
+export class ProfilePage {
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams) {
-    this.tab1 = 'HomePage';
-    this.tab2 = 'ProfilePage';
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad TabsPage');
+    console.log('ionViewDidLoad ProfilePage');
   }
 
 }
