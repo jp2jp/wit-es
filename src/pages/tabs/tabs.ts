@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AuthProvider } from '../../providers/auth/auth';
 
 @IonicPage()
 @Component({
@@ -13,9 +14,11 @@ export class TabsPage {
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams) {
+    public navParams: NavParams,
+    private authService: AuthProvider) {
     this.tab1 = 'HomePage';
     this.tab2 = 'ProfilePage';
+    this.authService.nav = navCtrl;
   }
 
   ionViewDidLoad() {
