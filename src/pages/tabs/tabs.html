@@ -1,4 +1,4 @@
 <ion-tabs>
-  <ion-tab [root]="tab1" tabTitle="Home" tabIcon="md-home" tabBadge="4" tabBadgeStyle="danger"></ion-tab>
-  <ion-tab [root]="tab2" tabTitle="Profile" tabIcon="md-contact"></ion-tab>
+  <ion-tab [root]="tab1" tabTitle="" tabIcon="md-list-box" [tabBadge]="badgeValue" tabBadgeStyle="danger" (ionSelect)="tabChange(tab1)"></ion-tab>
+  <ion-tab [root]="tab2" tabTitle="" tabIcon="md-contact" (ionSelect)="tabChange(tab2)"></ion-tab>
 </ion-tabs>

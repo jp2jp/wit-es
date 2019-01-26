@@ -11,6 +11,7 @@ export class TabsPage {
 
   tab1: any;
   tab2: any;
+  badgeValue: any;
 
   constructor(
     public navCtrl: NavController,
@@ -23,6 +24,15 @@ export class TabsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TabsPage');
+  }
+
+  tabChange(data) {
+    if (data == 'HomePage') {
+      this.badgeValue = 0;
+    }
+    else {
+      this.badgeValue = 4;
+    }
   }
 
 }

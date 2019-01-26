@@ -1,0 +1,51 @@
+page-evaluation {
+    
+    .top-grid {
+        width: 100%;
+        height: 35vh;
+        padding-left: 65px;
+    }
+
+    .top-row {
+        width: 100%;
+        height: 100%;
+    }
+
+    .image-container {
+        width: 100%;
+        height: 100%;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+    }
+
+    .name-container {
+        padding-left: 65px;
+        h3 {
+            font-size: 2.2rem;
+            margin-bottom: 0;
+        }
+        p {
+            font-size: 1.4rem;
+            margin-top: 0;
+        }
+    }
+
+    .details-container {
+        padding: 5px 5px 5px 24px;
+    }
+
+    .details-first-line {
+        font-size: 1.6rem;
+        font-weight: bold;
+    }
+
+    .details-second-line {
+        font-size: 1.5rem;
+        margin: 0;
+    }
+
+}

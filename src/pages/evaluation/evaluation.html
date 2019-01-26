@@ -1,0 +1,38 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Evaluation</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-grid class="top-grid">
+
+    <ion-row class="top-row">
+
+      <ion-col col-6 class="image-container">
+        <img [src]="data?.image" />
+      </ion-col>
+
+      <ion-col col-6 class="details-container">
+        <h3 class="details-first-line gray-font">
+          {{data?.position}}
+        </h3>
+        <p class="details-second-line gray-font">
+          {{data?.department}}
+        </p>
+      </ion-col>
+
+    </ion-row>
+
+  </ion-grid>
+
+  <div class="name-container">
+    <h3 class="gray-front">{{data?.name}}</h3>
+    <p class="gray-front">{{data?.department}}</p>
+  </div>
+
+</ion-content>

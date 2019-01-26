@@ -9,7 +9,7 @@
 
 <ion-content>
 
-  <ion-card tappable class="list-card" *ngFor="let item of data">
+  <ion-card tappable class="list-card" *ngFor="let item of data" (click)="view(item)">
     <ion-card-content>
       <ion-item no-margin no-padding no-lines class="list-item">
         <ion-thumbnail item-start>

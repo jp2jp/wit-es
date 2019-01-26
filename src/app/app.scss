@@ -30,3 +30,10 @@ button {
 .gray-font {
     color: #525252 !important;
 }
+
+.badge {
+    border-radius: 50% !important;
+    width: 19px !important;
+    height: 19px !important;
+    right: calc(50% - 25px) !important;
+}

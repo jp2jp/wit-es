@@ -19,7 +19,7 @@ export class HomePage {
     console.log('ionViewDidLoad HomePage');
     this.getData();
   }
-  
+
   getData() {
     this.data = [
       {
@@ -53,6 +53,10 @@ export class HomePage {
         image: './assets/imgs/5.jpg'
       }
     ]
+  }
+
+  view(data) {
+    this.navCtrl.push('EvaluationPage', { data: data });
   }
 
 }
