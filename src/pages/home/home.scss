@@ -20,6 +20,7 @@ page-home {
                 width: 75px;
                 height: 75px;
                 border-radius: 50%;
+                border: solid 0.55px rgba(70, 70, 70, 0.2);
             }
         }
         h3 {
@@ -32,6 +33,18 @@ page-home {
         margin: 0 !important;
         p {
             margin-top: 18px;
+        }
+    }
+
+    .empty-search-msg {
+        height: 100%;
+        display: flex;
+        // align-items: center;
+        justify-content: center;
+        padding-top: 5vh;
+        p {
+            margin: 0;
+            color: map-get($colors, 'ash');
         }
     }
 

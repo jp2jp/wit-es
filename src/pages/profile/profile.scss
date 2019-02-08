@@ -48,16 +48,24 @@ page-profile {
     .fab-btn {
         bottom: -22.5px;
         right: 32px;
-        border: solid 3px #fff;
         border-radius: 50%;
         .fab {
             margin: 0;
-            height: 45px;
-            width: 45px;
+            height: 48px;
+            width: 48px;
+            border: solid 3px #fff;
             box-shadow: none;
             .fab-close-icon {
-                line-height: 45px;
+                line-height: 48px !important;
             }
+        }
+        .fab-close-active {
+            background-color: #f4f4f4;
+            color: #000;
+            border: none !important;
+        }
+        ion-fab-list .fab{
+            border: none !important;
         }
     }
 

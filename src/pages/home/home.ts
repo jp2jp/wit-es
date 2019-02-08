@@ -9,6 +9,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class HomePage {
 
   data: any;
+  isSearching: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -57,6 +58,18 @@ export class HomePage {
 
   view(data) {
     this.navCtrl.push('EvaluationPage', { data: data });
+  }
+
+  onSearch(ev: any) {
+    let val = ev.target.value;
+    if (val && val.trim() != '') {
+      this.isSearching = true;
+      this.data = this.data.filter(element => element.name.replace(/\s/g, '').toLowerCase().indexOf(val.replace(/\s/g, '').toLowerCase()) + 1);
+    }
+    else {
+      this.isSearching = false;
+      this.getData();
+    }
   }
 
 }

@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-searchbar></ion-searchbar>
+    <ion-searchbar [(ngModel)]="searchInput" (ionInput)="onSearch($event)"></ion-searchbar>
   </ion-navbar>
 
 </ion-header>
@@ -24,5 +24,9 @@
       </ion-item>
     </ion-card-content>
   </ion-card>
+
+  <div class="empty-search-msg" *ngIf="isSearching && data?.length == 0">
+    <p>Cannot find <strong>{{searchInput}}</strong></p>
+  </div>
 
 </ion-content>
