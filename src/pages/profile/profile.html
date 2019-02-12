@@ -10,6 +10,7 @@
 
     <div class="name-container">
       <h3>{{user?.firstName}} {{user?.lastName}}</h3>
+      <!-- <p>123</p> -->
     </div>
 
     <ion-fab bottom right class="fab-btn">
@@ -45,16 +46,25 @@
 
           <ion-item no-lines no-padding class="info-item">
             <h3 class="info-header gray-font">
-              Student ID#
+              {{user?.role | titlecase}} ID
             </h3>
             <p class="info-value">
-              1234567890
+              {{user?.uid | uppercase}}
             </p>
           </ion-item>
 
           <ion-item no-lines no-padding class="info-item">
             <h3 class="info-header gray-font">
-              Mobile
+              Department
+            </h3>
+            <p class="info-value">
+              {{department?.departmentName}}
+            </p>
+          </ion-item>
+
+          <ion-item no-lines no-padding class="info-item">
+            <h3 class="info-header gray-font">
+              Phone
             </h3>
             <p class="info-value">
               +639078746722
@@ -75,7 +85,7 @@
               Address
             </h3>
             <p class="info-value">
-              Bacolod City Government Center, Circumferential Road, Bacolod City, Negros Occidental
+              {{user?.address}}
             </p>
           </ion-item>
 

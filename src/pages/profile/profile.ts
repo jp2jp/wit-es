@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { UserProvider } from '../../providers/user/user';
+import { DepartmentProvider } from '../../providers/department/department';
 
 @IonicPage()
 @Component({
@@ -11,10 +12,12 @@ import { UserProvider } from '../../providers/user/user';
 export class ProfilePage {
 
   user: any;
+  department: any;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    private departmentService: DepartmentProvider,
     private userService: UserProvider,
     private authService: AuthProvider) {
   }
@@ -35,6 +38,7 @@ export class ProfilePage {
         if (response.success) {
           this.user = response.data;
           console.log(this.user);
+          this.getDepartment(response.data.departmentId);
         }
         else {
           console.log(response.message);
@@ -45,6 +49,14 @@ export class ProfilePage {
       console.log(error);
       this.logout();
     })
+  }
+
+  getDepartment(id) {
+    this.departmentService.getDepartment(id)
+    .subscribe( data => {
+      this.department = data;
+    })
+    
   }
 
 }

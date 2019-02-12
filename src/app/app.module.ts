@@ -14,6 +14,7 @@ import { LoaderProvider } from '../providers/loader/loader';
 import { LocalStorageProvider } from '../providers/local-storage/local-storage';
 import { UserProvider } from '../providers/user/user';
 import { EvaluationProvider } from '../providers/evaluation/evaluation';
+import { DepartmentProvider } from '../providers/department/department';
 export const firebaseConfig = FirebaseConfig.firebaseConfig;
 
 @NgModule({
@@ -42,7 +43,8 @@ export const firebaseConfig = FirebaseConfig.firebaseConfig;
     LoaderProvider,
     LocalStorageProvider,
     UserProvider,
-    EvaluationProvider
+    EvaluationProvider,
+    DepartmentProvider
   ]
 })
 export class AppModule {
