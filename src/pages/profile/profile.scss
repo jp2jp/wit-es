@@ -21,6 +21,7 @@ page-profile {
         h3 {
             color: #fff;
             font-weight: bold;
+            font-size: 22px !important;
             // text-shadow: 2px 1px rgba(123, 115, 115, 0.3);
         }
     }
@@ -88,9 +89,11 @@ page-profile {
 
     .info-header {
         font-weight: bold;
+        font-size: 14px !important;
     }
 
     .info-value {
+        font-size: 14px !important;
     }
 
     [col-9] {

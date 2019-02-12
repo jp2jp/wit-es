@@ -27,7 +27,7 @@ export class LoginPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
-    this.localStorageService.get()
+    this.localStorageService.getToken()
       .then(result => {
         if (result) {
           this.isLoggedIn = true;
@@ -42,11 +42,10 @@ export class LoginPage {
     this.loaderService.present();
     this.authService.login(user)
       .then(result => {
-        this.userSubscribe = this.userService.getUserData(result.user.uid)
-          .subscribe(data => {
-            console.log(data)
-            if (data.length > 0) {
-              this.localStorageService.set(data[0]);
+        this.userSubscribe = this.userService.getUser(result.user.uid)
+          .subscribe(response => {
+            if (response.success) {
+              this.localStorageService.setToken(result.user.uid);
               this.loaderService.dismiss();
               this.navCtrl.setRoot('TabsPage');
             }

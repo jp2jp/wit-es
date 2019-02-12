@@ -7,16 +7,16 @@ export class LocalStorageProvider {
   constructor(private storage: Storage) {
   }
 
-  set(data) {
-    this.storage.set('wit-user', data);
+  setToken(data) {
+    this.storage.set('wit-token', data);
   }
 
-  get() {
-    return this.storage.get('wit-user');
+  getToken() {
+    return this.storage.get('wit-token');
   }
 
-  remove() {
-    return this.storage.remove('wit-user');
+  removeToken() {
+    return this.storage.remove('wit-token');
   }
 
 }

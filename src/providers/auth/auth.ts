@@ -18,7 +18,7 @@ export class AuthProvider {
 
   async logout() {
     await this.afAuth.auth.signOut();
-    await this.localStorageService.remove();
+    await this.localStorageService.removeToken();
     this.redirect();
   }
 

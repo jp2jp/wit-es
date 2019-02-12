@@ -9,7 +9,7 @@
     <div class="image-overlay"></div>
 
     <div class="name-container">
-      <h3>Princess Thea</h3>
+      <h3>{{user?.firstName}} {{user?.lastName}}</h3>
     </div>
 
     <ion-fab bottom right class="fab-btn">
@@ -66,7 +66,7 @@
               Email
             </h3>
             <p class="info-value">
-              princesstheamabangis@gmail.com
+              {{user?.email}}
             </p>
           </ion-item>
 
