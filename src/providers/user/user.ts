@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { map } from 'rxjs/operators';
 import { LocalStorageProvider } from '../local-storage/local-storage';
 
@@ -7,32 +7,28 @@ import { LocalStorageProvider } from '../local-storage/local-storage';
 export class UserProvider {
 
   usersCollection: AngularFirestoreCollection<any>;
+  userDocument: AngularFirestoreDocument<any>;
 
   constructor(
     private afs: AngularFirestore,
     private localStorageService: LocalStorageProvider) {
   }
 
-  getUser(uid) {
-    this.usersCollection = this.afs.collection('users', ref => ref.where('uid', '==', uid));
-    return this.usersCollection.snapshotChanges()
+  getUser(id) {
+    this.userDocument = this.afs.collection('users').doc(id);
+    return this.userDocument.snapshotChanges()
       .pipe(
         map(changes => {
-          if (changes.length > 0) {
-            const data = changes[0].payload.doc.data();
-            data.id = changes[0].payload.doc.id;
-            return { success: true, message: 'User found.', data: { id: changes[0].payload.doc.id, ...changes[0].payload.doc.data() } };
+          if (changes.payload.data()) {
+            const data = changes.payload.data();
+            data.id = changes.payload.id;
+            return { success: true, message: 'User found.', data: { id: changes.payload.id, ...changes.payload.data() } };
           }
           else {
             return { success: false, message: 'No user found.', data: null };
           }
-          // return changes.map(a => {
-          //   const data = a.payload.doc.data();
-          //   data.id = a.payload.doc.id;
-          //   return data;
-          // })
         })
-      );
+      )
   }
 
   async getUserData() {

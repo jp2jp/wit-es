@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { EvaluationProvider } from '../../providers/evaluation/evaluation';
+import * as _ from 'lodash';
+import { UserProvider } from '../../providers/user/user';
 
 @IonicPage()
 @Component({
@@ -13,7 +16,9 @@ export class HomePage {
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams) {
+    public navParams: NavParams,
+    private userService: UserProvider,
+    private evaluationService: EvaluationProvider) {
   }
 
   ionViewDidLoad() {
@@ -22,6 +27,23 @@ export class HomePage {
   }
 
   getData() {
+    this.evaluationService.getEvaluationData()
+      .then(result => {
+        result.subscribe(data => {
+          console.log(data)
+          _.forEach(data, element => {
+            this.userService.getUser(element.teacherId)
+              .subscribe(res => {
+                if (res.success) {
+                  element.teacherData = res.data;
+                }
+              })
+          })
+          console.log(data)
+        })
+      })
+
+
     this.data = [
       {
         name: 'Sarah Munting Prinsesa',

@@ -33,30 +33,30 @@ export class ProfilePage {
 
   getUserData() {
     this.userService.getUserData()
-    .then( result => {
-      result.subscribe( response => {
-        if (response.success) {
-          this.user = response.data;
-          console.log(this.user);
-          this.getDepartment(response.data.departmentId);
-        }
-        else {
-          console.log(response.message);
-          this.logout();
-        }
+      .then(result => {
+        result.subscribe(response => {
+          if (response.success) {
+            this.user = response.data;
+            console.log(this.user);
+            this.getDepartment(response.data.departmentId);
+          }
+          else {
+            console.log(response.message);
+            this.logout();
+          }
+        })
+      }, error => {
+        console.log(error);
+        this.logout();
       })
-    }, error => {
-      console.log(error);
-      this.logout();
-    })
   }
 
   getDepartment(id) {
     this.departmentService.getDepartment(id)
-    .subscribe( data => {
-      this.department = data;
-    })
-    
+      .subscribe(data => {
+        this.department = data;
+      })
+
   }
 
 }
