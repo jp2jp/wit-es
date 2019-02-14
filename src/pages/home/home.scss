@@ -9,8 +9,13 @@ page-home {
     }
 
     .list-item {
+        min-height: 113px;
         .item-inner {
             padding: 0 !important;
+        }
+        .label {
+            margin: 0 2px 0 0 !important;
+            white-space: unset !important;
         }
         ion-thumbnail {
             min-width: 75px;
@@ -26,10 +31,22 @@ page-home {
         h3 {
             font-weight: 500;
             font-size: 14px;
+            margin: 2px 0 0;
         }
         p {
             font-size: 14px;
         }
+    }
+
+    .subj-desc {
+        margin: 7px 0 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        line-height: 19px;
+        max-height: 38px;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
     }
 
     .content-right {
@@ -37,6 +54,7 @@ page-home {
         margin: 0 !important;
         p {
             margin-top: 18px;
+            font-size: 12px !important;
         }
     }
 

@@ -12,8 +12,9 @@ import { UserProvider } from '../../providers/user/user';
 export class HomePage {
 
   data: any;
-  isSearching: boolean = false;
   teachers = [];
+  isSearching: boolean = false;
+  isLoading: boolean = true;
 
   constructor(
     public navCtrl: NavController,
@@ -31,58 +32,75 @@ export class HomePage {
     this.evaluationService.getEvaluationData()
       .then(result => {
         result.subscribe(data => {
-          _.forEach(data, element => {
+          _.forEach(data, async element => {
             var teacher = this.teachers.find(e => e.teacherId == element.teacherId);
             if (teacher != null) {
               element.teacherData = teacher;
             }
             else {
-              this.userService.getUser(element.teacherId)
+              const user = await this.userService.getUser(element.teacherId)
                 .subscribe(res => {
                   if (res.success) {
                     this.teachers.push(res.data);
                     element.teacherData = res.data;
+                    user.unsubscribe();
+                  }
+                  else {
+                    user.unsubscribe();
                   }
                 })
             }
           })
-          console.log(data)
+          console.log(data);
+          this.isLoading = false;
         })
+      }, error => {
+        console.log(error);
+        this.isLoading = false;
       })
 
 
     this.data = [
       {
         name: 'Arne Joy Perede',
-        position: 'Faculty',
-        department: 'IT Department',
-        image: './assets/imgs/miss1.png'
+        position: 'IT423A',
+        department: 'Technical Writing',
+        image: './assets/imgs/miss1.png',
+        date: '8min'
       },
       {
         name: 'Shaina Carbonilla',
-        position: 'Faculty',
-        department: 'Engineering Department',
-        image: './assets/imgs/miss2.png'
+        position: 'IT423B',
+        department: 'Human Computer Interaction',
+        image: './assets/imgs/miss3.png',
+        date: '8min'
       },
       {
         name: 'Timothy Labiao',
-        position: 'Faculty',
-        department: 'Arts Department',
-        image: './assets/imgs/sir1.png'
+        position: 'IT423C',
+        department: 'Management Information System',
+        image: './assets/imgs/sir1.png',
+        date: '8min'
       },
       {
         name: 'Cherry Monocay',
-        position: 'Faculty',
-        department: 'Education Department',
-        image: './assets/imgs/miss1.png'
+        position: 'IT423D',
+        department: 'Professional Ethics and Values Education',
+        image: './assets/imgs/miss2.png',
+        date: '8min'
       },
       {
         name: 'Jimmy Magbanua',
-        position: 'Faculty',
-        department: 'CBA Department',
-        image: './assets/imgs/sir2.png'
+        position: 'IT423E',
+        department: 'Advanced Web Programming',
+        image: './assets/imgs/sir2.png',
+        date: '8min'
       }
     ]
+  }
+
+  async appendData(data) {
+    await this.teachers.push(data);
   }
 
   view(data) {

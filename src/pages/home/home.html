@@ -9,7 +9,7 @@
 
 <ion-content>
 
-  <ion-card tappable class="list-card" *ngFor="let item of data" (click)="view(item)">
+  <ion-card tappable class="list-card" [hidden]="isLoading" *ngFor="let item of data" (click)="view(item)">
     <ion-card-content>
       <ion-item no-margin no-padding no-lines class="list-item">
         <ion-thumbnail item-start>
@@ -17,13 +17,20 @@
         </ion-thumbnail>
         <h3><strong>{{item?.name}}</strong></h3>
         <p>{{item?.position}}</p>
-        <p>{{item?.department}}</p>
+        <p class="subj-desc">{{item?.department}}</p>
         <div item-end class="content-right">
-          <p>4:32</p>
+          <p>{{item?.date}}</p>
         </div>
       </ion-item>
     </ion-card-content>
   </ion-card>
+
+  <div class="loader-container" [hidden]="!isLoading">
+    <div class="content-container">
+        <ion-spinner name="circles"></ion-spinner>
+      <p class="gray-font"><strong>Loading content...</strong></p>
+    </div>
+  </div>
 
   <div class="empty-search-msg" *ngIf="isSearching && data?.length == 0">
     <p>Cannot find <strong>{{searchInput}}</strong></p>
