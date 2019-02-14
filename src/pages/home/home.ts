@@ -13,6 +13,7 @@ export class HomePage {
 
   data: any;
   isSearching: boolean = false;
+  teachers = [];
 
   constructor(
     public navCtrl: NavController,
@@ -30,14 +31,20 @@ export class HomePage {
     this.evaluationService.getEvaluationData()
       .then(result => {
         result.subscribe(data => {
-          console.log(data)
           _.forEach(data, element => {
-            this.userService.getUser(element.teacherId)
-              .subscribe(res => {
-                if (res.success) {
-                  element.teacherData = res.data;
-                }
-              })
+            var teacher = this.teachers.find(e => e.teacherId == element.teacherId);
+            if (teacher != null) {
+              element.teacherData = teacher;
+            }
+            else {
+              this.userService.getUser(element.teacherId)
+                .subscribe(res => {
+                  if (res.success) {
+                    this.teachers.push(res.data);
+                    element.teacherData = res.data;
+                  }
+                })
+            }
           })
           console.log(data)
         })
@@ -46,34 +53,34 @@ export class HomePage {
 
     this.data = [
       {
-        name: 'Sarah Munting Prinsesa',
+        name: 'Arne Joy Perede',
         position: 'Faculty',
         department: 'IT Department',
-        image: './assets/imgs/1.jpg'
+        image: './assets/imgs/miss1.png'
       },
       {
-        name: 'Becky Potato',
+        name: 'Shaina Carbonilla',
         position: 'Faculty',
         department: 'Engineering Department',
-        image: './assets/imgs/2.jpg'
+        image: './assets/imgs/miss2.png'
       },
       {
-        name: 'Tom Sawyer',
+        name: 'Timothy Labiao',
         position: 'Faculty',
         department: 'Arts Department',
-        image: './assets/imgs/3.jpg'
+        image: './assets/imgs/sir1.png'
       },
       {
-        name: 'Miss Minchin',
+        name: 'Cherry Monocay',
         position: 'Faculty',
         department: 'Education Department',
-        image: './assets/imgs/4.jpg'
+        image: './assets/imgs/miss1.png'
       },
       {
-        name: 'Lavinia Maldita',
+        name: 'Jimmy Magbanua',
         position: 'Faculty',
         department: 'CBA Department',
-        image: './assets/imgs/5.jpg'
+        image: './assets/imgs/sir2.png'
       }
     ]
   }
