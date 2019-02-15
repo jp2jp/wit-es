@@ -3,7 +3,7 @@ page-evaluation {
     .top-grid {
         width: 100%;
         height: 35vh;
-        padding-left: 65px;
+        padding-left: 48px;
     }
 
     .top-row {
@@ -46,6 +46,98 @@ page-evaluation {
     .details-second-line {
         font-size: 1.5rem;
         margin: 0;
+    }
+
+    .nav-btns {
+        margin: 0 0.2rem 0 12px;
+    }
+
+    .nav-btns-right {
+        margin: 0 10px 0 0.2rem !important;
+    }
+
+    ///////////////////////////////
+
+
+    .list-card {
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+        border-bottom: solid 0.55px rgba(0, 0, 0, 0.25);
+    }
+
+    .list-item {
+        min-height: 113px;
+        .item-inner {
+            padding: 0 !important;
+        }
+        .label {
+            margin: 0 2px 0 0 !important;
+            white-space: unset !important;
+        }
+        ion-thumbnail {
+            min-width: 75px;
+            min-height: 75px;
+            img {
+                object-fit: cover;
+                width: 75px;
+                height: 75px;
+                border-radius: 50%;
+                border: solid 0.55px rgba(70, 70, 70, 0.2);
+            }
+        }
+        h3 {
+            font-weight: 500;
+            font-size: 14px;
+            margin: 2px 0 0;
+        }
+        p {
+            font-size: 14px;
+        }
+    }
+
+    .evaluation-card {
+        // width: 100%;
+        margin: 10px;
+        border-radius: 0;
+        box-shadow: none;
+        border: solid 0.55px rgba(0, 0, 0, 0.15);
+        .card-content {
+            h3 {
+                font-size: 14px;
+            }
+        }
+        .radio-container {
+            margin-top: 16px;
+            .inner-container {
+                flex: 0 0 20% !important;
+                width: 20% !important;
+                max-width: 20% !important;
+                display: grid;
+                text-align: center;
+                .radio {
+                    margin: 0 auto;
+                }
+                p {
+                    font-size: 14px !important;
+                }
+            }
+        }
+    }
+
+    .instructions-card {
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+        border-bottom: solid 0.55px rgba(0, 0, 0, 0.25);
+        .card-content {
+            padding: 13px 16px 13px 24px;
+            p {
+                font-size: 14px !important;
+            }
+        }
     }
 
 }

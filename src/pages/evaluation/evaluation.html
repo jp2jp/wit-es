@@ -1,7 +1,17 @@
 <ion-header>
 
   <ion-navbar>
+    <ion-buttons left class="nav-btns">
+      <button ion-button clear icon-only (click)="close()">
+        <ion-icon name="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-title>Evaluation</ion-title>
+    <ion-buttons right class="nav-btns-right">
+      <button ion-button clear icon-only (click)="complete()">
+        <ion-icon name="md-checkmark"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -9,7 +19,147 @@
 
 <ion-content>
 
-  <ion-grid class="top-grid">
+  <ion-card tappable class="list-card">
+    <ion-card-content>
+      <ion-item no-margin no-padding no-lines class="list-item">
+        <ion-thumbnail item-start>
+          <img [src]="data?.image" />
+        </ion-thumbnail>
+        <h3><strong>{{data?.name}}</strong></h3>
+        <p>{{data?.position}}</p>
+        <p class="subj-desc">{{data?.department}}</p>
+        <!-- <div item-end class="content-right">
+          <p>{{data?.date}}</p>
+        </div> -->
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="instructions-card">
+    <ion-card-content>
+      <p>
+        <strong class="gray-font">5</strong>
+        &nbsp;&nbsp;
+        <ion-icon small name="ios-arrow-round-forward"></ion-icon>
+        &nbsp;&nbsp;
+        Very Satisfied
+      </p>
+      <p>
+        <strong class="gray-font">4</strong>
+        &nbsp;&nbsp;
+        <ion-icon small name="ios-arrow-round-forward"></ion-icon>
+        &nbsp;&nbsp;
+        Satisfied
+      </p>
+      <p>
+        <strong class="gray-font">3</strong>
+        &nbsp;&nbsp;
+        <ion-icon small name="ios-arrow-round-forward"></ion-icon>
+        &nbsp;&nbsp;
+        Good
+      </p>
+      <p>
+        <strong class="gray-font">2</strong>
+        &nbsp;&nbsp;
+        <ion-icon small name="ios-arrow-round-forward"></ion-icon>
+        &nbsp;&nbsp;
+        Slightly unsatisfied
+      </p>
+      <p>
+        <strong class="gray-font">1</strong>
+        &nbsp;&nbsp;
+        <ion-icon small name="ios-arrow-round-forward"></ion-icon>
+        &nbsp;&nbsp;
+        Needs improvement
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="evaluation-card">
+    <ion-card-content>
+      <h3>1. Are you satisfied in terms of convenience, comfort of the facilities and quality of presenters?</h3>
+      <ion-row radio-group class="radio-container">
+        <ion-col col-2 class="inner-container">
+          <ion-radio></ion-radio>
+          <p>5</p>
+        </ion-col>
+        <ion-col col-2 class="inner-container">
+          <ion-radio></ion-radio>
+          <p>4</p>
+        </ion-col>
+        <ion-col col-2 class="inner-container">
+          <ion-radio></ion-radio>
+          <p>3</p>
+        </ion-col>
+        <ion-col col-2 class="inner-container">
+          <ion-radio></ion-radio>
+          <p>2</p>
+        </ion-col>
+        <ion-col col-2 class="inner-container">
+          <ion-radio></ion-radio>
+          <p>1</p>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="evaluation-card">
+    <ion-card-content>
+      <h3>2. Do you think that the amount of information and resource materials provided met their needs?</h3>
+      <ion-row radio-group class="radio-container">
+        <ion-col col-2 class="inner-container">
+          <ion-radio></ion-radio>
+          <p>5</p>
+        </ion-col>
+        <ion-col col-2 class="inner-container">
+          <ion-radio></ion-radio>
+          <p>4</p>
+        </ion-col>
+        <ion-col col-2 class="inner-container">
+          <ion-radio></ion-radio>
+          <p>3</p>
+        </ion-col>
+        <ion-col col-2 class="inner-container">
+          <ion-radio></ion-radio>
+          <p>2</p>
+        </ion-col>
+        <ion-col col-2 class="inner-container">
+          <ion-radio></ion-radio>
+          <p>1</p>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="evaluation-card">
+    <ion-card-content>
+      <h3>1. Are you satisfied with the program and feel it was a good use of their time?</h3>
+      <ion-row radio-group class="radio-container">
+        <ion-col col-2 class="inner-container">
+          <ion-radio></ion-radio>
+          <p>5</p>
+        </ion-col>
+        <ion-col col-2 class="inner-container">
+          <ion-radio></ion-radio>
+          <p>4</p>
+        </ion-col>
+        <ion-col col-2 class="inner-container">
+          <ion-radio></ion-radio>
+          <p>3</p>
+        </ion-col>
+        <ion-col col-2 class="inner-container">
+          <ion-radio></ion-radio>
+          <p>2</p>
+        </ion-col>
+        <ion-col col-2 class="inner-container">
+          <ion-radio></ion-radio>
+          <p>1</p>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- <ion-grid class="top-grid">
 
     <ion-row class="top-row">
 
@@ -33,6 +183,6 @@
   <div class="name-container">
     <h3 class="gray-front">{{data?.name}}</h3>
     <p class="gray-front">{{data?.department}}</p>
-  </div>
+  </div> -->
 
 </ion-content>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { EvaluationProvider } from '../../providers/evaluation/evaluation';
 import * as _ from 'lodash';
 import { UserProvider } from '../../providers/user/user';
@@ -15,10 +15,12 @@ export class HomePage {
   teachers = [];
   isSearching: boolean = false;
   isLoading: boolean = true;
+  isEmpty: boolean = false;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    public modalCtrl: ModalController,
     private userService: UserProvider,
     private evaluationService: EvaluationProvider) {
   }
@@ -53,6 +55,9 @@ export class HomePage {
           })
           console.log(data);
           this.isLoading = false;
+          if (data.length == 0) {
+            this.isEmpty = true;
+          }
         })
       }, error => {
         console.log(error);
@@ -65,35 +70,35 @@ export class HomePage {
         name: 'Arne Joy Perede',
         position: 'IT423A',
         department: 'Technical Writing',
-        image: './assets/imgs/miss1.png',
+        image: './assets/imgs/placeholders/1.png',
         date: '8min'
       },
       {
         name: 'Shaina Carbonilla',
         position: 'IT423B',
         department: 'Human Computer Interaction',
-        image: './assets/imgs/miss3.png',
+        image: './assets/imgs/placeholders/2.png',
         date: '8min'
       },
       {
         name: 'Timothy Labiao',
         position: 'IT423C',
         department: 'Management Information System',
-        image: './assets/imgs/sir1.png',
+        image: './assets/imgs/placeholders/4.png',
         date: '8min'
       },
       {
         name: 'Cherry Monocay',
         position: 'IT423D',
         department: 'Professional Ethics and Values Education',
-        image: './assets/imgs/miss2.png',
+        image: './assets/imgs/placeholders/3.png',
         date: '8min'
       },
       {
         name: 'Jimmy Magbanua',
         position: 'IT423E',
         department: 'Advanced Web Programming',
-        image: './assets/imgs/sir2.png',
+        image: './assets/imgs/placeholders/5.png',
         date: '8min'
       }
     ]
@@ -104,7 +109,12 @@ export class HomePage {
   }
 
   view(data) {
-    this.navCtrl.push('EvaluationPage', { data: data });
+    // this.navCtrl.push('EvaluationPage', { data: data });
+    this.modalCtrl.create('EvaluationPage', { data: data }).present();
+  }
+
+  getNumber() {
+    return Math.floor(Math.random() * 6) + 1;
   }
 
   onSearch(ev: any) {

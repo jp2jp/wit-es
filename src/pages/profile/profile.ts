@@ -52,6 +52,7 @@ export class ProfilePage {
   }
 
   getDepartment(id) {
+    if (!id) return;
     this.departmentService.getDepartment(id)
       .subscribe(data => {
         this.department = data;
