@@ -25,9 +25,17 @@
     </ion-card-content>
   </ion-card>
 
+  <div class="empty-msg-container" *ngIf="data?.length == 0 && !isSearching">
+    <div class="inner-container">
+      <img src="./assets/imgs/marker.png" />
+      <h3><strong>Empty message header empty message header</strong></h3>
+      <p>Empty message empty message empty message</p>
+    </div>
+  </div>
+
   <div class="loader-container" [hidden]="!isLoading">
     <div class="content-container">
-        <ion-spinner name="circles"></ion-spinner>
+      <ion-spinner name="circles"></ion-spinner>
       <p class="gray-font"><strong>Loading content...</strong></p>
     </div>
   </div>
