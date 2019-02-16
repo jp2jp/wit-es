@@ -15,23 +15,23 @@
         <ion-thumbnail item-start>
           <img [src]="item?.image" />
         </ion-thumbnail>
-        <h3><strong>{{item?.name}}</strong></h3>
-        <p>{{item?.position}}</p>
-        <p class="subj-desc">{{item?.department}}</p>
+        <h3><strong>{{item?.teacherData?.firstName}} {{item?.teacherData?.lastName}}</strong></h3>
+        <p>{{item?.subjectData?.subjectName}}</p>
+        <p class="subj-desc">{{item?.subjectData?.subjectDesc}}</p>
         <div item-end class="content-right">
-          <p>{{item?.date}}</p>
+          <p>{{item?.dateCreated | amCalendar : calendar}}</p>
         </div>
       </ion-item>
     </ion-card-content>
   </ion-card>
 
-  <!-- <div class="empty-msg-container" *ngIf="isEmpty && !isSearching">
+  <div class="empty-msg-container" *ngIf="isEmpty && !isSearching">
     <div class="inner-container">
       <img src="./assets/imgs/marker.png" />
       <h3><strong>Empty message header empty message header</strong></h3>
       <p>Empty message empty message empty message</p>
     </div>
-  </div> -->
+  </div>
 
   <div class="loader-container" [hidden]="!isLoading">
     <div class="content-container">

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { map } from 'rxjs/operators';
 import { LocalStorageProvider } from '../local-storage/local-storage';
+import { AuthProvider } from '../auth/auth';
 
 @Injectable()
 export class UserProvider {
@@ -11,6 +12,7 @@ export class UserProvider {
 
   constructor(
     private afs: AngularFirestore,
+    private authService: AuthProvider,
     private localStorageService: LocalStorageProvider) {
   }
 
@@ -34,7 +36,12 @@ export class UserProvider {
   async getUserData() {
     try {
       const token = await this.localStorageService.getToken();
-      return this.getUser(token);
+      if (token != null) {
+        return this.getUser(token);
+      }
+      else {
+        this.authService.logout();
+      }
     }
     catch (error) {
       console.log(error);

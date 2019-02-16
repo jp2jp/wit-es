@@ -9,16 +9,16 @@ export class LoaderProvider {
   constructor(private loadingCtrl: LoadingController) {
   }
 
-  present(msg = '') {
+  present(msg = null) {
     this.loader = this.loadingCtrl.create({
       content: msg,
-      spinner: 'crescent'
+      spinner: 'circles'
     })
     this.loader.present();
   }
 
   dismiss() {
-    this.loader.dismiss();
+    return this.loader.dismiss();
   }
 
 }

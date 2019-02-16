@@ -34,17 +34,19 @@ export class ProfilePage {
   getUserData() {
     this.userService.getUserData()
       .then(result => {
-        result.subscribe(response => {
-          if (response.success) {
-            this.user = response.data;
-            console.log(this.user);
-            this.getDepartment(response.data.departmentId);
-          }
-          else {
-            console.log(response.message);
-            this.logout();
-          }
-        })
+        if (result) {
+          result.subscribe(response => {
+            if (response.success) {
+              this.user = response.data;
+              console.log(this.user);
+              this.getDepartment(response.data.departmentId);
+            }
+            else {
+              console.log(response.message);
+              this.logout();
+            }
+          })
+        }
       }, error => {
         console.log(error);
         this.logout();

@@ -8,7 +8,7 @@
     </ion-buttons>
     <ion-title>Evaluation</ion-title>
     <ion-buttons right class="nav-btns-right">
-      <button ion-button clear icon-only (click)="complete()">
+      <button ion-button clear icon-only [disabled]="!allowSubmit" (click)="complete()">
         <ion-icon name="md-checkmark"></ion-icon>
       </button>
     </ion-buttons>
@@ -25,9 +25,9 @@
         <ion-thumbnail item-start>
           <img [src]="data?.image" />
         </ion-thumbnail>
-        <h3><strong>{{data?.name}}</strong></h3>
-        <p>{{data?.position}}</p>
-        <p class="subj-desc">{{data?.department}}</p>
+        <h3><strong>{{data?.teacherData?.firstName}} {{data?.teacherData?.lastName}}</strong></h3>
+        <p>{{data?.subjectData?.subjectName}}</p>
+        <p class="subj-desc">{{data?.subjectData?.subjectDesc}}</p>
         <!-- <div item-end class="content-right">
           <p>{{data?.date}}</p>
         </div> -->
@@ -42,117 +42,68 @@
         &nbsp;&nbsp;
         <ion-icon small name="ios-arrow-round-forward"></ion-icon>
         &nbsp;&nbsp;
-        Very Satisfied
+        All of the time
       </p>
       <p>
         <strong class="gray-font">4</strong>
         &nbsp;&nbsp;
         <ion-icon small name="ios-arrow-round-forward"></ion-icon>
         &nbsp;&nbsp;
-        Satisfied
+        Most of the time
       </p>
       <p>
         <strong class="gray-font">3</strong>
         &nbsp;&nbsp;
         <ion-icon small name="ios-arrow-round-forward"></ion-icon>
         &nbsp;&nbsp;
-        Good
+        Sometimes
       </p>
       <p>
         <strong class="gray-font">2</strong>
         &nbsp;&nbsp;
         <ion-icon small name="ios-arrow-round-forward"></ion-icon>
         &nbsp;&nbsp;
-        Slightly unsatisfied
+        Rarely
       </p>
       <p>
         <strong class="gray-font">1</strong>
         &nbsp;&nbsp;
         <ion-icon small name="ios-arrow-round-forward"></ion-icon>
         &nbsp;&nbsp;
-        Needs improvement
+        Never
       </p>
     </ion-card-content>
   </ion-card>
 
-  <ion-card class="evaluation-card">
-    <ion-card-content>
-      <h3>1. Are you satisfied in terms of convenience, comfort of the facilities and quality of presenters?</h3>
-      <ion-row radio-group class="radio-container">
-        <ion-col col-2 class="inner-container">
-          <ion-radio></ion-radio>
-          <p>5</p>
-        </ion-col>
-        <ion-col col-2 class="inner-container">
-          <ion-radio></ion-radio>
-          <p>4</p>
-        </ion-col>
-        <ion-col col-2 class="inner-container">
-          <ion-radio></ion-radio>
-          <p>3</p>
-        </ion-col>
-        <ion-col col-2 class="inner-container">
-          <ion-radio></ion-radio>
-          <p>2</p>
-        </ion-col>
-        <ion-col col-2 class="inner-container">
-          <ion-radio></ion-radio>
-          <p>1</p>
-        </ion-col>
-      </ion-row>
-    </ion-card-content>
-  </ion-card>
+  <div class="loader-container" [hidden]="!isLoading">
+    <div class="content-container">
+      <ion-spinner name="circles"></ion-spinner>
+      <p class="gray-font"><strong>Loading questions...</strong></p>
+    </div>
+  </div>
 
-  <ion-card class="evaluation-card">
+  <ion-card [hidden]="isLoading" class="evaluation-card" *ngFor="let item of questions; let i = index;">
     <ion-card-content>
-      <h3>2. Do you think that the amount of information and resource materials provided met their needs?</h3>
+      <h3><strong class="gray-font">{{i+1}}. </strong>{{item?.content}}</h3>
       <ion-row radio-group class="radio-container">
         <ion-col col-2 class="inner-container">
-          <ion-radio></ion-radio>
+          <ion-radio (ionSelect)="select(5, item?.id, i)"></ion-radio>
           <p>5</p>
         </ion-col>
         <ion-col col-2 class="inner-container">
-          <ion-radio></ion-radio>
+          <ion-radio (ionSelect)="select(4, item?.id, i)"></ion-radio>
           <p>4</p>
         </ion-col>
         <ion-col col-2 class="inner-container">
-          <ion-radio></ion-radio>
+          <ion-radio (ionSelect)="select(3, item?.id, i)"></ion-radio>
           <p>3</p>
         </ion-col>
         <ion-col col-2 class="inner-container">
-          <ion-radio></ion-radio>
+          <ion-radio (ionSelect)="select(2, item?.id, i)"></ion-radio>
           <p>2</p>
         </ion-col>
         <ion-col col-2 class="inner-container">
-          <ion-radio></ion-radio>
-          <p>1</p>
-        </ion-col>
-      </ion-row>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card class="evaluation-card">
-    <ion-card-content>
-      <h3>1. Are you satisfied with the program and feel it was a good use of their time?</h3>
-      <ion-row radio-group class="radio-container">
-        <ion-col col-2 class="inner-container">
-          <ion-radio></ion-radio>
-          <p>5</p>
-        </ion-col>
-        <ion-col col-2 class="inner-container">
-          <ion-radio></ion-radio>
-          <p>4</p>
-        </ion-col>
-        <ion-col col-2 class="inner-container">
-          <ion-radio></ion-radio>
-          <p>3</p>
-        </ion-col>
-        <ion-col col-2 class="inner-container">
-          <ion-radio></ion-radio>
-          <p>2</p>
-        </ion-col>
-        <ion-col col-2 class="inner-container">
-          <ion-radio></ion-radio>
+          <ion-radio (ionSelect)="select(1, item?.id, i)"></ion-radio>
           <p>1</p>
         </ion-col>
       </ion-row>

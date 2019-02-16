@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { map } from 'rxjs/operators';
 import { LocalStorageProvider } from '../local-storage/local-storage';
+import { AuthProvider } from '../auth/auth';
 
 @Injectable()
 export class EvaluationProvider {
@@ -11,6 +12,7 @@ export class EvaluationProvider {
 
   constructor(
     private afs: AngularFirestore,
+    private authService: AuthProvider,
     private localStorageService: LocalStorageProvider) {
   }
 
@@ -31,12 +33,22 @@ export class EvaluationProvider {
   async getEvaluationData() {
     try {
       const token = await this.localStorageService.getToken();
-      return this.getEvaluations(token);
+      if (token != null) {
+        return this.getEvaluations(token);
+      }
+      else {
+        this.authService.logout();
+      }
     }
     catch (error) {
       console.log(error);
       return error;
     }
+  }
+
+  addEvaluation(data) {
+    const evaluationsCollection: AngularFirestoreCollection<any> = this.afs.collection('evaluations');
+    return evaluationsCollection.add(data);
   }
 
 }
