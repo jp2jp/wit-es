@@ -27,7 +27,7 @@ export class EvaluationPage {
     public navParams: NavParams,
     private loaderService: LoaderProvider,
     private toastService: ToastProvider,
-    private localStorageService: LocalStorageProvider, 
+    private localStorageService: LocalStorageProvider,
     private evaluationService: EvaluationProvider,
     private questionsService: QuestionsProvider) {
     this.data = navParams.get('data');
@@ -48,7 +48,7 @@ export class EvaluationPage {
     this.questionsService.getQuestions()
       .subscribe(data => {
         this.questions = data;
-        console.log(this.questions);
+        console.log('Questions', this.questions);
         this.isLoading = false;
       })
   }
@@ -105,17 +105,17 @@ export class EvaluationPage {
     }
     console.log(evaluation);
     this.evaluationService.addEvaluation(evaluation)
-    .then( async result => {
-      console.log(result);
-      this.allowSubmit = false;
-      await this.loaderService.dismiss();
-      await this.toastService.presentToast('Submitting of evaluation success.');
-      this.close();
-    }, async error => {
-      console.log(error);
-      await this.loaderService.dismiss();
-      this.toastService.presentToast('A problem occured while processing your request. Please try again.');
-    })
+      .then(async result => {
+        console.log(result);
+        this.allowSubmit = false;
+        await this.loaderService.dismiss();
+        await this.toastService.presentToast('Submitting of evaluation success.');
+        this.close();
+      }, async error => {
+        console.log(error);
+        await this.loaderService.dismiss();
+        this.toastService.presentToast('A problem occured while processing your request. Please try again.');
+      })
   }
 
   close() {

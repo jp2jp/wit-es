@@ -13,6 +13,7 @@ import { SubjectProvider } from '../../providers/subject/subject';
 export class HomePage {
 
   data: any;
+  backupData: any;
   teachers = [];
   isSearching: boolean = false;
   isLoading: boolean = true;
@@ -76,6 +77,7 @@ export class HomePage {
                 })
             })
             this.data = data;
+            this.backupData = data;
             console.log(this.data);
             this.isLoading = false;
             if (data.length == 0) {
@@ -145,11 +147,14 @@ export class HomePage {
     let val = ev.target.value;
     if (val && val.trim() != '') {
       this.isSearching = true;
-      this.data = this.data.filter(element => element.name.replace(/\s/g, '').toLowerCase().indexOf(val.replace(/\s/g, '').toLowerCase()) + 1);
+      this.data = this.data.filter(element => element.teacherData.firstName.replace(/\s/g, '').toLowerCase().indexOf(val.replace(/\s/g, '').toLowerCase()) + 1
+        || element.teacherData.lastName.replace(/\s/g, '').toLowerCase().indexOf(val.replace(/\s/g, '').toLowerCase()) + 1
+        || element.subjectData.subjectName.replace(/\s/g, '').toLowerCase().indexOf(val.replace(/\s/g, '').toLowerCase()) + 1
+        || element.subjectData.subjectDesc.replace(/\s/g, '').toLowerCase().indexOf(val.replace(/\s/g, '').toLowerCase()) + 1);
     }
     else {
       this.isSearching = false;
-      this.getData();
+      this.data = this.backupData;
     }
   }
 
