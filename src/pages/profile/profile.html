@@ -13,13 +13,13 @@
       <!-- <p>123</p> -->
     </div>
 
-    <ion-fab bottom right class="fab-btn">
+    <ion-fab bottom right #fab class="fab-btn">
       <button ion-fab>
         <ion-icon name="md-menu"></ion-icon>
       </button>
       <ion-fab-list side="top">
-        <button ion-fab color="primary">
-          <ion-icon name="md-create"></ion-icon>
+        <button ion-fab color="primary" (click)="changeImage(fab)">
+          <ion-icon name="md-camera"></ion-icon>
         </button>
       </ion-fab-list>
       <ion-fab-list side="left">
@@ -28,7 +28,7 @@
         </button>
       </ion-fab-list>
       <ion-fab-list side="bottom">
-        <button ion-fab color="primary" (click)="logout()">
+        <button ion-fab color="primary" (click)="logout(fab)">
           <ion-icon name="md-log-out"></ion-icon>
         </button>
       </ion-fab-list>

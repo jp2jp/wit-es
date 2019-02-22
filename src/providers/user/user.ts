@@ -49,4 +49,9 @@ export class UserProvider {
     }
   }
 
+  updateUser(data, id) {
+    const user = this.afs.collection('users').doc(id);
+    return user.set(data, { merge: true });
+  }
+
 }

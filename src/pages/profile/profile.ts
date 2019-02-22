@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController, FabContainer } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { UserProvider } from '../../providers/user/user';
 import { DepartmentProvider } from '../../providers/department/department';
+import { CameraProvider } from '../../providers/camera/camera';
+import { LoaderProvider } from '../../providers/loader/loader';
+import { ToastProvider } from '../../providers/toast/toast';
 
 @IonicPage()
 @Component({
@@ -17,6 +20,10 @@ export class ProfilePage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    public actionSheetCtrl: ActionSheetController,
+    private loaderService: LoaderProvider,
+    private toastService: ToastProvider,
+    private cameraService: CameraProvider,
     private departmentService: DepartmentProvider,
     private userService: UserProvider,
     private authService: AuthProvider) {
@@ -27,7 +34,8 @@ export class ProfilePage {
     this.getUserData();
   }
 
-  logout() {
+  logout(fab: FabContainer) {
+    if (fab) fab.close();
     this.authService.logout();
   }
 
@@ -43,13 +51,13 @@ export class ProfilePage {
             }
             else {
               console.log(response.message);
-              this.logout();
+              this.authService.logout();
             }
           })
         }
       }, error => {
         console.log(error);
-        this.logout();
+        this.authService.logout();
       })
   }
 
@@ -59,7 +67,72 @@ export class ProfilePage {
       .subscribe(data => {
         this.department = data;
       })
+  }
 
+  changeImage(fab: FabContainer) {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Choose option',
+      buttons: [
+        {
+          text: 'Gallery',
+          icon: 'ios-images-outline',
+          handler: () => {
+            if (fab) fab.close();
+            this.loaderService.present();
+            this.cameraService.getPicture(0)
+              .then(imageData => {
+                var base64Img: string = 'data:image/jpeg;base64,' + imageData;
+                this.userService.updateUser({ profileImage: base64Img }, this.user.uid)
+                  .then(res => {
+                    console.log(res);
+                    this.loaderService.dismiss();
+                    this.toastService.presentToast('Profile picture updated.');
+                  }, error => {
+                    console.log(error);
+                    this.loaderService.dismiss();
+                    this.toastService.presentToast('Uploading image failed.');
+                  })
+              }, error => {
+                console.log(error);
+                this.loaderService.dismiss();
+              })
+          }
+        },
+        {
+          text: 'Camera',
+          icon: 'ios-camera-outline',
+          handler: () => {
+            if (fab) fab.close();
+            this.loaderService.present();
+            this.cameraService.getPicture(1)
+              .then(imageData => {
+                var base64Img: string = 'data:image/jpeg;base64,' + imageData;
+                this.userService.updateUser({ profileImage: base64Img }, this.user.uid)
+                  .then(res => {
+                    console.log(res);
+                    this.loaderService.dismiss();
+                    this.toastService.presentToast('Profile picture updated.');
+                  }, error => {
+                    console.log(error);
+                    this.loaderService.dismiss();
+                    this.toastService.presentToast('Uploading image failed.');
+                  })
+              }, error => {
+                this.loaderService.dismiss();
+                console.log(error)
+              })
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    actionSheet.present();
   }
 
 }
