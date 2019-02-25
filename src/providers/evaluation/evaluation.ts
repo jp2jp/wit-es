@@ -7,18 +7,15 @@ import { AuthProvider } from '../auth/auth';
 @Injectable()
 export class EvaluationProvider {
 
-  evaluationsCollection: AngularFirestoreCollection<any>;
-  teacherDocument: AngularFirestoreDocument<any>;
-
   constructor(
     private afs: AngularFirestore,
     private authService: AuthProvider,
     private localStorageService: LocalStorageProvider) {
   }
 
-  getEvaluations(id) {
-    this.evaluationsCollection = this.afs.collection('class-lists', ref => ref.where(`students.${id}`, '==', true));
-    return this.evaluationsCollection.snapshotChanges()
+  getClassList(id) {
+    const classListCollection: AngularFirestoreCollection<any> = this.afs.collection('class-lists', ref => ref.where(`students.${id}`, '==', true));
+    return classListCollection.snapshotChanges()
       .pipe(
         map(changes => {
           return changes.map(a => {
@@ -30,7 +27,37 @@ export class EvaluationProvider {
       );
   }
 
-  async getEvaluationData() {
+  async getClassListData() {
+    try {
+      const token = await this.localStorageService.getToken();
+      if (token != null) {
+        return this.getClassList(token);
+      }
+      else {
+        this.authService.logout();
+      }
+    }
+    catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
+
+  getEvaluations(id) {
+    const evaluationsCollection: AngularFirestoreCollection<any> = this.afs.collection('evaluations', ref => ref.where('studentId', '==', id));
+    return evaluationsCollection.snapshotChanges()
+      .pipe(
+        map(changes => {
+          return changes.map(a => {
+            const data = a.payload.doc.data();
+            data.id = a.payload.doc.id;
+            return data;
+          })
+        })
+      );
+  }
+
+  async getEvaluationsData() {
     try {
       const token = await this.localStorageService.getToken();
       if (token != null) {

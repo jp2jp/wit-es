@@ -4,6 +4,7 @@ import { EvaluationProvider } from '../../providers/evaluation/evaluation';
 import * as _ from 'lodash';
 import { UserProvider } from '../../providers/user/user';
 import { SubjectProvider } from '../../providers/subject/subject';
+import { ToastProvider } from '../../providers/toast/toast';
 
 @IonicPage()
 @Component({
@@ -13,13 +14,14 @@ import { SubjectProvider } from '../../providers/subject/subject';
 export class HomePage {
 
   data: any;
+  evaluations: any;
   backupData: any;
   teachers = [];
   isSearching: boolean = false;
   isLoading: boolean = true;
   isEmpty: boolean = false;
   calendar = {
-    sameDay: '[Today]',
+    sameDay: '[Today] ha',
     nextDay: '[Tomorrow]',
     nextWeek: 'dddd',
     lastDay: '[Yesterday]',
@@ -31,6 +33,7 @@ export class HomePage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public modalCtrl: ModalController,
+    private toastService: ToastProvider,
     private userService: UserProvider,
     private subjectService: SubjectProvider,
     private evaluationService: EvaluationProvider) {
@@ -38,15 +41,20 @@ export class HomePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
-    this.getData();
+    this.getEvaluations();
   }
 
   getData() {
-    this.evaluationService.getEvaluationData()
+    this.evaluationService.getClassListData()
       .then(result => {
         if (result) {
           result.subscribe(data => {
             _.forEach(data, async element => {
+              var subjectIndex = _.findIndex(this.evaluations, ['subjectId', element.subjectId]);
+              var teacherIndex = _.findIndex(this.evaluations, ['teacherId', element.teacherId]);
+              if (subjectIndex != -1 && teacherIndex != -1) {
+                element.isCompleted = true;
+              }
               element.image = this.getRandomImage();
               var teacher = this.teachers.find(e => e.teacherId == element.teacherId);
               if (teacher != null) {
@@ -77,11 +85,21 @@ export class HomePage {
                 })
             })
             this.data = data;
+            // this.data = _.filter(this.data, element => {
+            //   var subjectIndex = _.findIndex(this.evaluations, ['subjectId', element.subjectId]);
+            //   var teacherIndex = _.findIndex(this.evaluations, ['teacherId', element.teacherId]);
+            //   if (subjectIndex == -1 && teacherIndex == -1) {
+            //     return element;
+            //   }
+            // })
             this.backupData = data;
-            console.log(this.data);
+            console.log('Class list:', this.data);
             this.isLoading = false;
             if (data.length == 0) {
               this.isEmpty = true;
+            }
+            else {
+              this.isEmpty = false;
             }
           })
         }
@@ -89,44 +107,19 @@ export class HomePage {
         console.log(error);
         this.isLoading = false;
       })
+  }
 
-    // this.data = [
-    //   {
-    //     name: 'Arne Joy Perede',
-    //     position: 'IT423A',
-    //     department: 'Technical Writing',
-    //     image: './assets/imgs/placeholders/1.png',
-    //     date: '8min'
-    //   },
-    //   {
-    //     name: 'Shaina Carbonilla',
-    //     position: 'IT423B',
-    //     department: 'Human Computer Interaction',
-    //     image: './assets/imgs/placeholders/2.png',
-    //     date: '8min'
-    //   },
-    //   {
-    //     name: 'Timothy Labiao',
-    //     position: 'IT423C',
-    //     department: 'Management Information System',
-    //     image: './assets/imgs/placeholders/4.png',
-    //     date: '8min'
-    //   },
-    //   {
-    //     name: 'Cherry Monocay',
-    //     position: 'IT423D',
-    //     department: 'Professional Ethics and Values Education',
-    //     image: './assets/imgs/placeholders/3.png',
-    //     date: '8min'
-    //   },
-    //   {
-    //     name: 'Jimmy Magbanua',
-    //     position: 'IT423E',
-    //     department: 'Advanced Web Programming',
-    //     image: './assets/imgs/placeholders/5.png',
-    //     date: '8min'
-    //   }
-    // ]
+  getEvaluations() {
+    this.evaluationService.getEvaluationsData()
+      .then(result => {
+        if (result) {
+          result.subscribe(data => {
+            this.evaluations = data;
+            console.log('Evaluations:', this.evaluations)
+            this.getData();
+          })
+        }
+      })
   }
 
   async appendData(data) {
@@ -134,8 +127,12 @@ export class HomePage {
   }
 
   view(data) {
-    // this.navCtrl.push('EvaluationPage', { data: data });
-    this.modalCtrl.create('EvaluationPage', { data: data }).present();
+    if (data.isCompleted) {
+      this.toastService.presentToast('You are only allowed to evaluate this teacher once.');
+    }
+    else {
+      this.modalCtrl.create('EvaluationPage', { data: data }).present();
+    }
   }
 
   getRandomImage() {

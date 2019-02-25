@@ -8,7 +8,7 @@
     </ion-buttons>
     <ion-title>Evaluation</ion-title>
     <ion-buttons right class="nav-btns-right">
-      <button ion-button clear icon-only [disabled]="!allowSubmit" (click)="complete()">
+      <button ion-button clear icon-only [disabled]="!allowSubmit" [color]="color" (click)="complete()">
         <ion-icon name="md-checkmark"></ion-icon>
       </button>
     </ion-buttons>
@@ -108,6 +108,17 @@
         </ion-col>
       </ion-row>
     </ion-card-content>
+  </ion-card>
+
+  <ion-card class="evaluation-card">
+    <ion-item>
+      <ion-label>
+        <p>
+          <strong>Comments:</strong>
+        </p>
+      </ion-label>
+      <ion-textarea rows="3" [(ngModel)]="comments"></ion-textarea>
+    </ion-item>
   </ion-card>
 
   <!-- <ion-grid class="top-grid">

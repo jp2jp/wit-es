@@ -18,8 +18,13 @@
         <h3><strong>{{item?.teacherData?.firstName}} {{item?.teacherData?.lastName}}</strong></h3>
         <p>{{item?.subjectData?.subjectName}}</p>
         <p class="subj-desc">{{item?.subjectData?.subjectDesc}}</p>
+        <!-- <div item-end>
+          <ion-icon color="primary" class="check-icon" name="ios-checkmark-circle-outline" *ngIf="item?.isCompleted"></ion-icon>
+        </div> -->
         <div item-end class="content-right">
           <p>{{item?.dateCreated | amCalendar : calendar}}</p>
+          <ion-icon color="primary" class="check-icon" name="ios-checkmark-circle-outline" *ngIf="item?.isCompleted"></ion-icon>
+          <p class="done-label" *ngIf="item?.isCompleted">Done</p>
         </div>
       </ion-item>
     </ion-card-content>
@@ -28,8 +33,8 @@
   <div class="empty-msg-container" *ngIf="isEmpty && !isSearching">
     <div class="inner-container">
       <img src="./assets/imgs/marker.png" />
-      <h3><strong>You have no evaluation at the moment.</strong></h3>
-      <p>Empty message empty message empty message</p>
+      <h3 class="gray-font"><strong>You have no evaluation at the moment.</strong></h3>
+      <p class="gray-font">For more information, please contact the admin.</p>
     </div>
   </div>
 

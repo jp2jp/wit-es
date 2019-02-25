@@ -20,6 +20,7 @@ import { QuestionsProvider } from '../providers/questions/questions';
 import { ToastProvider } from '../providers/toast/toast';
 import { Camera } from '@ionic-native/camera';
 import { CameraProvider } from '../providers/camera/camera';
+import { CourseProvider } from '../providers/course/course';
 export const firebaseConfig = FirebaseConfig.firebaseConfig;
 
 @NgModule({
@@ -54,7 +55,8 @@ export const firebaseConfig = FirebaseConfig.firebaseConfig;
     QuestionsProvider,
     ToastProvider,
     Camera,
-    CameraProvider
+    CameraProvider,
+    CourseProvider
   ]
 })
 export class AppModule {

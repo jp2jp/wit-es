@@ -2,7 +2,7 @@
 
   <div class="main-container">
 
-    <div class="inner-container" [hidden]="isLoggedIn">
+    <div class="inner-container" [hidden]="!displayLogin">
 
       <div class="logo-container">
         <img src="./assets/logo/wit.png" />
@@ -11,7 +11,7 @@
       <div class="forms-container">
 
         <ion-item no-padding>
-          <ion-input type="text" placeholder="Username" [(ngModel)]="user.email"></ion-input>
+          <ion-input type="email" placeholder="Username" [(ngModel)]="user.email"></ion-input>
         </ion-item>
 
         <ion-item no-padding>

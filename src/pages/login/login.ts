@@ -4,6 +4,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 import { LoaderProvider } from '../../providers/loader/loader';
 import { UserProvider } from '../../providers/user/user';
 import { LocalStorageProvider } from '../../providers/local-storage/local-storage';
+import { ToastProvider } from '../../providers/toast/toast';
 
 @IonicPage()
 @Component({
@@ -14,11 +15,12 @@ export class LoginPage {
 
   user: any = {};
   userSubscribe: any;
-  isLoggedIn: boolean = false;
+  displayLogin: boolean = false;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    private toastService: ToastProvider,
     private localStorageService: LocalStorageProvider,
     private loaderService: LoaderProvider,
     private userService: UserProvider,
@@ -30,11 +32,14 @@ export class LoginPage {
     this.localStorageService.getToken()
       .then(result => {
         if (result) {
-          this.isLoggedIn = true;
           this.navCtrl.setRoot('TabsPage');
+        }
+        else {
+          this.displayLogin = true;
         }
       }, error => {
         console.log(error);
+        this.displayLogin = true;
       })
   }
 
@@ -44,21 +49,34 @@ export class LoginPage {
       .then(result => {
         this.userSubscribe = this.userService.getUser(result.user.uid)
           .subscribe(response => {
-            if (response.success) {
+            console.log(response)
+            if (response.success && response.data.role == 'student') {
               this.localStorageService.setToken(result.user.uid);
               this.loaderService.dismiss();
               this.navCtrl.setRoot('TabsPage');
             }
             else {
               this.loaderService.dismiss();
+              this.toastService.presentToast('Invalid Login');
+              this.authService.logout();
             }
           }, error => {
             console.log(error);
             this.loaderService.dismiss();
+            this.toastService.presentToast('Invalid Login');
           })
       }, error => {
         console.log(error);
         this.loaderService.dismiss();
+        if (error.code == 'auth/wrong-password') {
+          this.toastService.presentToast('Invalid password.');
+        }
+        else if ('auth/user-not-found') {
+          this.toastService.presentToast('User not found.');
+        }
+        else {
+          this.toastService.presentToast('Invalid Login');
+        }
       })
   }
 

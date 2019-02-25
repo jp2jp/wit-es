@@ -19,6 +19,8 @@ export class EvaluationPage {
   isLoading: boolean = true;
   evaluation = [];
   allowSubmit: boolean = true;
+  comments = '';
+  color = '';
 
   constructor(
     public alertCtrl: AlertController,
@@ -55,6 +57,9 @@ export class EvaluationPage {
 
   select(value, id, index) {
     this.evaluation[index] = { [id]: value };
+    if (this.evaluation.length == this.questions.length) {
+      this.color = 'primary';
+    }
   }
 
   complete() {
@@ -83,7 +88,7 @@ export class EvaluationPage {
       console.log('not yet completed')
       const denyAlert = this.alertCtrl.create({
         title: 'Submission denied',
-        message: 'Complete all the questions first before submitting.',
+        message: 'Complete all the evaluation questions first before submitting.',
         buttons: ['OK']
       });
       denyAlert.present();
@@ -101,7 +106,8 @@ export class EvaluationPage {
       semester: this.data.semester,
       studentId: this.uid,
       subjectId: this.data.subjectId,
-      teacherId: this.data.subjectId
+      teacherId: this.data.teacherId,
+      comments: this.comments
     }
     console.log(evaluation);
     this.evaluationService.addEvaluation(evaluation)

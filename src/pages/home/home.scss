@@ -52,6 +52,7 @@ page-home {
     .content-right {
         height: 100%;
         margin: 0 !important;
+        text-align: center;
         p {
             margin-top: 18px;
             font-size: 12px !important;
@@ -67,6 +68,8 @@ page-home {
         p {
             margin: 0;
             color: map-get($colors, 'ash');
+            width: 100%;
+            text-align: center;
         }
     }
 
@@ -85,11 +88,22 @@ page-home {
             }
             h3 {
                 font-size: 14px !important;
+                margin-top: 3.5rem;
             }
             p {
                 font-size: 13px !important;
             }
         }
+    }
+
+    .check-icon {
+        font-size: 2.2em;
+        margin-top: 12px;
+    }
+
+    .done-label {
+        margin: -2px 0 0 !important;
+        color: map-get($colors, 'primary');
     }
 
 }

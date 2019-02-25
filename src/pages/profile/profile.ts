@@ -6,6 +6,8 @@ import { DepartmentProvider } from '../../providers/department/department';
 import { CameraProvider } from '../../providers/camera/camera';
 import { LoaderProvider } from '../../providers/loader/loader';
 import { ToastProvider } from '../../providers/toast/toast';
+import { CourseProvider } from '../../providers/course/course';
+import { EvaluationProvider } from '../../providers/evaluation/evaluation';
 
 @IonicPage()
 @Component({
@@ -15,7 +17,9 @@ import { ToastProvider } from '../../providers/toast/toast';
 export class ProfilePage {
 
   user: any;
+  course: any;
   department: any;
+  subjects: any;
 
   constructor(
     public navCtrl: NavController,
@@ -24,6 +28,8 @@ export class ProfilePage {
     private loaderService: LoaderProvider,
     private toastService: ToastProvider,
     private cameraService: CameraProvider,
+    private courseService: CourseProvider,
+    private evaluationService: EvaluationProvider,
     private departmentService: DepartmentProvider,
     private userService: UserProvider,
     private authService: AuthProvider) {
@@ -47,7 +53,9 @@ export class ProfilePage {
             if (response.success) {
               this.user = response.data;
               console.log(this.user);
-              this.getDepartment(response.data.departmentId);
+              this.getCourse(this.user.courseId);
+              this.getDepartment(this.user.departmentId);
+              this.getSubjects();
             }
             else {
               console.log(response.message);
@@ -69,6 +77,30 @@ export class ProfilePage {
       })
   }
 
+  getCourse(id) {
+    if (!id) return;
+    this.courseService.getCourse(id)
+      .subscribe(data => {
+        this.course = data;
+      })
+  }
+
+  getSubjects() {
+    this.evaluationService.getClassListData()
+      .then(res => {
+        if (res) {
+          res.subscribe(data => {
+            this.subjects = data;
+            console.log(this.subjects)
+          })
+        }
+      })
+  }
+
+  settings(fab: FabContainer) {
+    if (fab) fab.close();
+  }
+
   changeImage(fab: FabContainer) {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Choose option',
@@ -83,8 +115,7 @@ export class ProfilePage {
               .then(imageData => {
                 var base64Img: string = 'data:image/jpeg;base64,' + imageData;
                 this.userService.updateUser({ profileImage: base64Img }, this.user.uid)
-                  .then(res => {
-                    console.log(res);
+                  .then(() => {
                     this.loaderService.dismiss();
                     this.toastService.presentToast('Profile picture updated.');
                   }, error => {
@@ -108,8 +139,7 @@ export class ProfilePage {
               .then(imageData => {
                 var base64Img: string = 'data:image/jpeg;base64,' + imageData;
                 this.userService.updateUser({ profileImage: base64Img }, this.user.uid)
-                  .then(res => {
-                    console.log(res);
+                  .then(() => {
                     this.loaderService.dismiss();
                     this.toastService.presentToast('Profile picture updated.');
                   }, error => {

@@ -10,8 +10,8 @@ export class ToastProvider {
   presentToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,
-      duration: 3500,
-      showCloseButton: true
+      duration: 2000,
+      // showCloseButton: true
     })
     return toast.present();
   }

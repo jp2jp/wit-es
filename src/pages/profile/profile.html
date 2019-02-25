@@ -3,14 +3,15 @@
   <div class="top-container">
 
     <div class="img-container">
-      <img src="./assets/imgs/profile.jpg" />
+      <img *ngIf="user?.profileImage" [src]="user?.profileImage" onerror="this.src='./assets/logo/wit.png'" />
+      <img *ngIf="!user?.profileImage" src="./assets/logo/wit.png" onerror="this.src='./assets/logo/wit.png'" />
     </div>
 
     <div class="image-overlay"></div>
 
     <div class="name-container">
       <h3>{{user?.firstName}} {{user?.lastName}}</h3>
-      <!-- <p>123</p> -->
+      <p *ngIf="subjects && subjects?.length > 0">{{subjects?.length}} Subject<span *ngIf="subjects?.length > 1">s</span></p>
     </div>
 
     <ion-fab bottom right #fab class="fab-btn">
@@ -18,18 +19,21 @@
         <ion-icon name="md-menu"></ion-icon>
       </button>
       <ion-fab-list side="top">
-        <button ion-fab color="primary" (click)="changeImage(fab)">
+        <button ion-fab color="primary" class="fab-btn-label" (click)="changeImage(fab)">
           <ion-icon name="md-camera"></ion-icon>
+          <!-- <ion-label class="gray-font">Change Image</ion-label> -->
         </button>
       </ion-fab-list>
       <ion-fab-list side="left">
-        <button ion-fab color="primary">
+        <button ion-fab color="primary" class="fab-btn-label" (click)="settings(fab)">
           <ion-icon name="md-settings"></ion-icon>
+          <!-- <ion-label class="gray-font">Settings</ion-label> -->
         </button>
       </ion-fab-list>
       <ion-fab-list side="bottom">
-        <button ion-fab color="primary" (click)="logout(fab)">
+        <button ion-fab color="primary" class="fab-btn-label" (click)="logout(fab)">
           <ion-icon name="md-log-out"></ion-icon>
+          <!-- <ion-label class="gray-font">Logout</ion-label> -->
         </button>
       </ion-fab-list>
     </ion-fab>
@@ -44,12 +48,21 @@
 
         <ion-col col-12>
 
-          <ion-item no-lines no-padding class="info-item">
+          <!-- <ion-item no-lines no-padding class="info-item">
             <h3 class="info-header gray-font">
               {{user?.role | titlecase}} ID
             </h3>
             <p class="info-value">
               {{user?.uid | uppercase}}
+            </p>
+          </ion-item> -->
+
+          <ion-item no-lines no-padding class="info-item">
+            <h3 class="info-header gray-font">
+              Course
+            </h3>
+            <p class="info-value">
+              {{course?.courseDesc}}
             </p>
           </ion-item>
 
